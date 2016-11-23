@@ -2,6 +2,12 @@
 
 set -ev
 
+git branch | sed -n '/\* /s///p'
+git rev-parse --abbrev-ref HEAD
+git name-rev --name-only HEAD
+git symbolic-ref -q --short HEAD
+
+
 BRANCH=`git rev-parse --abbrev-ref HEAD`
 DATE=`date -u +%Y-%m-%d`
 
