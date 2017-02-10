@@ -45,50 +45,50 @@ class Base {
 	 */
 	public function __construct( $TYPO3_CONF_VARS ) {
 
-	$ajaxRequest = GeneralUtility::_GET();
+		$ajaxRequest = GeneralUtility::_GET();
 
-	// create bootstrap
-	$this->bootstrap = new \TYPO3\CMS\Extbase\Core\Bootstrap();
+		// create bootstrap
+		$this->bootstrap = new \TYPO3\CMS\Extbase\Core\Bootstrap();
 
-	// get User
-	$feUserObj = \TYPO3\CMS\Frontend\Utility\EidUtility::initFeUser();
+		// get User
+		$feUserObj = \TYPO3\CMS\Frontend\Utility\EidUtility::initFeUser();
 
-	// set PID
-	$pid = (GeneralUtility::_GET( 'id' )) ? GeneralUtility::_GET( 'id' ) : 1;
+		// set PID
+		$pid = (GeneralUtility::_GET( 'id' )) ? GeneralUtility::_GET( 'id' ) : 1;
 
-	// Create and init Frontend
-	$GLOBALS['TSFE'] = GeneralUtility::makeInstance( 'TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController', $TYPO3_CONF_VARS, $pid, 0, TRUE );
-	$GLOBALS['TSFE']->connectToDB();
-	$GLOBALS['TSFE']->fe_user = $feUserObj;
-	$GLOBALS['TSFE']->id = $pid;
-	$GLOBALS['TSFE']->determineId();
-	//$GLOBALS['TSFE']->getCompressedTCarray(); //Comment this line when used for TYPO3 7.6.0 on wards
-	$GLOBALS['TSFE']->initTemplate();
-	$GLOBALS['TSFE']->getConfigArray();
-	//$GLOBALS['TSFE']->includeTCA(); //Comment this line when used for TYPO3 7.6.0 on wards
+		// Create and init Frontend
+		$GLOBALS['TSFE'] = GeneralUtility::makeInstance( 'TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController', $TYPO3_CONF_VARS, $pid, 0, TRUE );
+		$GLOBALS['TSFE']->connectToDB();
+		$GLOBALS['TSFE']->fe_user = $feUserObj;
+		$GLOBALS['TSFE']->id = $pid;
+		$GLOBALS['TSFE']->determineId();
+		//$GLOBALS['TSFE']->getCompressedTCarray(); //Comment this line when used for TYPO3 7.6.0 on wards
+		$GLOBALS['TSFE']->initTemplate();
+		$GLOBALS['TSFE']->getConfigArray();
+		//$GLOBALS['TSFE']->includeTCA(); //Comment this line when used for TYPO3 7.6.0 on wards
 
 
-	// Get Plugins TypoScript
-	$TypoScriptService = new \TYPO3\CMS\Extbase\Service\TypoScriptService();
-	$pluginConfiguration = $TypoScriptService->convertTypoScriptArrayToPlainArray($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_aimeos.']);
+		// Get Plugins TypoScript
+		$TypoScriptService = new \TYPO3\CMS\Extbase\Service\TypoScriptService();
+		$pluginConfiguration = $TypoScriptService->convertTypoScriptArrayToPlainArray($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_aimeos.']);
 
-	// Set configuration to call the plugin
-	$this->configuration = array (
-			'pluginName' => $ajaxRequest['plugin'],
-			'vendorName' => 'Aimeos',
-			'extensionName' => 'Aimeos',
-			'controller' => $ajaxRequest['controller'],
-			'action' => $ajaxRequest['action'],
-			'mvc' => array (
-					'requestHandlers' => array (
-							'TYPO3\CMS\Extbase\Mvc\Web\FrontendRequestHandler' => 'TYPO3\CMS\Extbase\Mvc\Web\FrontendRequestHandler'
-					)
-			),
-			'settings' => $pluginConfiguration['settings'],
-			'persistence' => array (
-					'storagePid' => $pluginConfiguration['persistence']['storagePid']
-			)
-		);
+		// Set configuration to call the plugin
+		$this->configuration = array (
+				'pluginName' => $ajaxRequest['plugin'],
+				'vendorName' => 'Aimeos',
+				'extensionName' => 'Aimeos',
+				'controller' => $ajaxRequest['controller'],
+				'action' => $ajaxRequest['action'],
+				'mvc' => array (
+						'requestHandlers' => array (
+								'TYPO3\CMS\Extbase\Mvc\Web\FrontendRequestHandler' => 'TYPO3\CMS\Extbase\Mvc\Web\FrontendRequestHandler'
+						)
+				),
+				'settings' => $pluginConfiguration['settings'],
+				'persistence' => array (
+						'storagePid' => $pluginConfiguration['persistence']['storagePid']
+				)
+			);
 
 	}
 }
