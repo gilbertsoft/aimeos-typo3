@@ -141,10 +141,10 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['extDirs']['0_'.$_EXTKEY] = 'EX
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-		'Aimeos.' . $_EXTKEY,
-		'account-history',
-		array( 'Account' => 'history' ),
-		array( 'Account' => 'history' )
+	'Aimeos.' . $_EXTKEY,
+	'account-history',
+	array( 'Account' => 'history' ),
+	array( 'Account' => 'history' )
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
@@ -173,7 +173,6 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['extDirs']['0_'.$_EXTKEY] = 'EX
  * Aimeos scheduler tasks
  */
 
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers']['aimeos:jobs'] = 'Aimeos\Aimeos\Command\JobsCommandController';
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['Aimeos\\Aimeos\\Scheduler\\Task\\Typo6'] = array(
 	'extension'        => $_EXTKEY,
 	'title'            => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/scheduler.xlf:default.name',
@@ -201,15 +200,22 @@ if( ( $aimeosExtConf = unserialize( $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'
 
 
 /**
+ * Add data handler hook, not used now
+ */
+
+/*$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][$_EXTKEY] = 'Aimeos\\Aimeos\\Custom\\DataHandler';*/
+
+
+/**
  * Add cache configuration
  */
 
 if( !is_array( $TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['aimeos'] ) ) {
-    $TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['aimeos'] = array();
+	$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['aimeos'] = array();
 }
 
 if( !isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['aimeos']['frontend'] ) ) {
-    $TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['aimeos']['frontend'] = 'TYPO3\\CMS\\Core\\Cache\\Frontend\\StringFrontend';
+	$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['aimeos']['frontend'] = 'TYPO3\\CMS\\Core\\Cache\\Frontend\\StringFrontend';
 }
 
 if( !isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['aimeos']['options'] ) ) {
